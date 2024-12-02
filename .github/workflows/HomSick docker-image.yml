@@ -1,0 +1,28 @@
+name: Build & Deploy HomSik app
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build-deploy:
+    name: build and deploy HomSik boot
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Java JDK 17
+      uses: actions/setup-java@v4
+      with:
+            distribution: 'corretto'
+            java-version: 17
+    - name: Grant execute permission for gradle source code
+      run: chmod +x gradle
+      
+    - name: Build the application
+      run: ./gradle build
